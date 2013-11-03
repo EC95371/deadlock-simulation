@@ -5,6 +5,7 @@ import org.jgraph.*;
 import org.jgraph.graph.*;
 
 import org.jgrapht.*;
+import org.jgrapht.alg.CycleDetector;
 import org.jgrapht.ext.*;
 //import org.jgrapht.graph.*;
 import org.jgrapht.graph.ListenableDirectedGraph;
@@ -34,6 +35,7 @@ public class JGraphPanel extends JPanel {
         jgAdapter = new JGraphModelAdapter<String, DefaultEdge>(graph);
         jgraph = new JGraph(jgAdapter);
         
+
         this.add(jgraph);
 
 //        String v1 = "v1";
@@ -66,7 +68,11 @@ public class JGraphPanel extends JPanel {
     {
         graph.addEdge(v1, v2);
     }
-    
+    public boolean detectCycles()
+    {
+        CycleDetector cycleDetector = new CycleDetector(graph);
+        return cycleDetector.detectCycles();
+    }
     
     
     private void positionVertexAt(Object vertex, int x, int y)
