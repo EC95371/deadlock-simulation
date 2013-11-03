@@ -2,6 +2,7 @@
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -23,6 +24,7 @@ public class MainFrame extends javax.swing.JFrame
     /**
      * Creates new form MainFrame
      */
+    ArrayList<String> vertices = new ArrayList<>();
     public MainFrame() 
     {
         initComponents();
@@ -35,6 +37,10 @@ public class MainFrame extends javax.swing.JFrame
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //clear out both jComboBoxes
+        selectEdgeOne.removeAllItems();
+        selectEdgeTwo.removeAllItems();
     }
 
     /**
@@ -54,10 +60,18 @@ public class MainFrame extends javax.swing.JFrame
         selectEdgeOne = new javax.swing.JComboBox();
         selectEdgeTwo = new javax.swing.JComboBox();
         detectDeadlockButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         addEdgeButton.setText("Add Edge");
+        addEdgeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEdgeButtonActionPerformed(evt);
+            }
+        });
 
         addVertexButton.setText("Add Vertex");
         addVertexButton.addActionListener(new java.awt.event.ActionListener() {
@@ -74,23 +88,35 @@ public class MainFrame extends javax.swing.JFrame
 
         detectDeadlockButton.setText("Detect Deadlock");
 
+        jLabel1.setText("Vertex name:");
+
+        jLabel2.setText("From");
+
+        jLabel3.setText("to");
+
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addComponent(vertexName, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(buttonPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(addVertexButton))
-                    .addComponent(addEdgeButton))
+                        .addComponent(addEdgeButton)
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addComponent(addVertexButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(vertexName, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(detectDeadlockButton)
                 .addContainerGap())
@@ -98,21 +124,22 @@ public class MainFrame extends javax.swing.JFrame
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(20, 20, 20)
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(buttonPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(addVertexButton)
-                        .addGap(1, 1, 1)
+                        .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addVertexButton)
+                            .addComponent(detectDeadlockButton)
+                            .addComponent(vertexName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addEdgeButton))
-                    .addGroup(buttonPanelLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(detectDeadlockButton)))
-                .addGap(18, 18, 18)
-                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(vertexName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                    .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,7 +162,14 @@ public class MainFrame extends javax.swing.JFrame
 
     private void addVertexButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVertexButtonActionPerformed
         jGraphPanel.addVertex(vertexName.getText());
+        vertices.add(vertexName.getText());
+        selectEdgeOne.addItem(vertexName.getText());
+        selectEdgeTwo.addItem(vertexName.getText());
     }//GEN-LAST:event_addVertexButtonActionPerformed
+
+    private void addEdgeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEdgeButtonActionPerformed
+        jGraphPanel.addEdge((String) selectEdgeOne.getSelectedItem(), (String) selectEdgeTwo.getSelectedItem());
+    }//GEN-LAST:event_addEdgeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,6 +212,9 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JButton detectDeadlockButton;
     private JGraphPanel jGraphPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JComboBox selectEdgeOne;
     private javax.swing.JComboBox selectEdgeTwo;
     private javax.swing.JTextField vertexName;

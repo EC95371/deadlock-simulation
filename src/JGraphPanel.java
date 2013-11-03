@@ -68,6 +68,7 @@ public class JGraphPanel extends JPanel {
     }
     
     
+    
     private void positionVertexAt(Object vertex, int x, int y)
     {
         DefaultGraphCell cell = jgAdapter.getVertexCell(vertex);
