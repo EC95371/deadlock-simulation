@@ -199,6 +199,7 @@ public class MainFrame extends javax.swing.JFrame
         if(jGraphPanel.detectCycles())
         {
             outputLable.setText("Cycle Detected!");
+            jGraphPanel.highlightCycleNodes();
         }else{
             outputLable.setText("No Cycle Detected!");
         }

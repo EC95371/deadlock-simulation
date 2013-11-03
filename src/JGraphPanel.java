@@ -73,6 +73,10 @@ public class JGraphPanel extends JPanel {
         CycleDetector cycleDetector = new CycleDetector(graph);
         return cycleDetector.detectCycles();
     }
+    public void highlightCycleNodes()
+    {
+        
+    }
     
     
     private void positionVertexAt(Object vertex, int x, int y)
