@@ -13,11 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.util.Scanner;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
  *
@@ -313,7 +309,7 @@ public class MainFrame extends javax.swing.JFrame
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
     //TODO Add functionality to reset graph. (ANYONE)    
-    //jGraphPanel.reset(); 
+    jGraphPanel.resetJGraphPanel();
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void openFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileChooserActionPerformed
