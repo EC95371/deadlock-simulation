@@ -310,6 +310,7 @@ public class MainFrame extends javax.swing.JFrame
         //clear out both jComboBoxes
         selectEdgeOne.removeAllItems();
         selectEdgeTwo.removeAllItems();
+        outputLable.setText("   ");
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void openFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileChooserActionPerformed
