@@ -1,5 +1,6 @@
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 
@@ -22,12 +24,14 @@ public class MainFrame extends javax.swing.JFrame
      * Creates new form MainFrame
      */
     ArrayList<String> vertices = new ArrayList<>();
+    File importedFile;
+    
     public MainFrame() 
     {
         initComponents();
         this.setTitle("Deadlock Detection Simulation");
         try {
-            InputStream imgStream = this.getClass().getResourceAsStream("icon.PNG"); //replace this with a better image! (Chris?) 
+            InputStream imgStream = this.getClass().getResourceAsStream("lipbite.PNG"); //replace this with a better image! (Chris?) 
             BufferedImage bi = ImageIO.read(imgStream); 
             ImageIcon myImg = new ImageIcon(bi); 
             this.setIconImage(myImg.getImage());
@@ -38,6 +42,11 @@ public class MainFrame extends javax.swing.JFrame
         //clear out both jComboBoxes
         selectEdgeOne.removeAllItems();
         selectEdgeTwo.removeAllItems();
+    }
+    
+    public void importFile()
+    {
+       //(chris) add input stuff here!!!  
     }
 
     /**
@@ -65,6 +74,7 @@ public class MainFrame extends javax.swing.JFrame
         resetButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        openFileChooser = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
@@ -176,6 +186,14 @@ public class MainFrame extends javax.swing.JFrame
 
         jMenu1.setText("File");
 
+        openFileChooser.setText("Open a File");
+        openFileChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFileChooserActionPerformed(evt);
+            }
+        });
+        jMenu1.add(openFileChooser);
+
         aboutMenuItem.setText("About");
         aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,6 +269,17 @@ public class MainFrame extends javax.swing.JFrame
     jGraphPanel.resetJGraphPanel();
     }//GEN-LAST:event_resetButtonActionPerformed
 
+    private void openFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileChooserActionPerformed
+        //Add file selection
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setMultiSelectionEnabled(false);//multiple files not may be chosen.
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setVisible(true);//sets window visable
+        fileChooser.showOpenDialog(null);
+        importedFile = fileChooser.getSelectedFile();
+        this.importFile();
+    }//GEN-LAST:event_openFileChooserActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -300,6 +329,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem openFileChooser;
     private javax.swing.JLabel outputLable;
     private javax.swing.JButton resetButton;
     private javax.swing.JComboBox selectEdgeOne;
