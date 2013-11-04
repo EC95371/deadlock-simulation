@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -64,6 +65,8 @@ public class MainFrame extends javax.swing.JFrame
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         outputLable = new javax.swing.JLabel();
+        cycleOutputLable = new javax.swing.JLabel();
+        resetButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -106,6 +109,15 @@ public class MainFrame extends javax.swing.JFrame
 
         outputLable.setText(" ");
 
+        cycleOutputLable.setText("                                                                            ");
+
+        resetButton.setText("Reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
@@ -130,11 +142,16 @@ public class MainFrame extends javax.swing.JFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cycleOutputLable)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(detectDeadlockButton)
-                    .addComponent(outputLable))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addComponent(resetButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(outputLable)))
                 .addContainerGap())
         );
         buttonPanelLayout.setVerticalGroup(
@@ -155,7 +172,9 @@ public class MainFrame extends javax.swing.JFrame
                         .addComponent(jLabel2)
                         .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)
-                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cycleOutputLable)
+                        .addComponent(resetButton)))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
@@ -181,7 +200,7 @@ public class MainFrame extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jGraphPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+            .addComponent(jGraphPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,6 +229,16 @@ public class MainFrame extends javax.swing.JFrame
         {
             outputLable.setText("Cycle Detected!");
             jGraphPanel.highlightCycleNodes();
+            String[] cycleNodes = jGraphPanel.getCycleNodes();
+            String tempString = "";
+            //output cycleNodes to cyleOutputLable
+            for(int i=0; i<cycleNodes.length-1; i++)
+            {
+                tempString += cycleNodes[i] + ", "; //TODO add actual formating 
+            }
+            tempString += "and " + cycleNodes[cycleNodes.length -1] +".";
+            JOptionPane.showMessageDialog(null, "A cycle has been found between the following nodes!\n" +tempString , "alert", JOptionPane.ERROR_MESSAGE);
+            cycleOutputLable.setText(tempString);
         }else{
             outputLable.setText("No Cycle Detected!");
         }
@@ -220,6 +249,11 @@ public class MainFrame extends javax.swing.JFrame
         AboutFrame window = new AboutFrame();
         window.setVisible(true);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+    //TODO Add functionality to reset graph. (ANYONE)    
+    //jGraphPanel.reset(); 
+    }//GEN-LAST:event_resetButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +295,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JButton addEdgeButton;
     private javax.swing.JButton addVertexButton;
     private javax.swing.JPanel buttonPanel;
+    private javax.swing.JLabel cycleOutputLable;
     private javax.swing.JButton detectDeadlockButton;
     private JGraphPanel jGraphPanel;
     private javax.swing.JLabel jLabel1;
@@ -270,6 +305,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel outputLable;
+    private javax.swing.JButton resetButton;
     private javax.swing.JComboBox selectEdgeOne;
     private javax.swing.JComboBox selectEdgeTwo;
     private javax.swing.JTextField vertexName;

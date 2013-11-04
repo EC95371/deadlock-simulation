@@ -24,7 +24,7 @@ import org.jgrapht.graph.DefaultEdge;
 public class JGraphPanel extends JPanel {
     
     //variables 
-    private final JGraphModelAdapter<String, DefaultEdge> jgAdapter;
+    private JGraphModelAdapter<String, DefaultEdge> jgAdapter;
     private JGraph jgraph;
     private ListenableDirectedGraph<String, DefaultEdge> graph;
     
@@ -74,10 +74,14 @@ public class JGraphPanel extends JPanel {
         return cycleDetector.detectCycles();
     }
     public void highlightCycleNodes()
-    {
+    {//TODO Fill this out!! (ANYONE)
         
     }
-    
+    public String[] getCycleNodes()
+    {
+        CycleDetector cycleDetector = new CycleDetector(graph);
+        return (String[])cycleDetector.findCycles().toArray(new String[cycleDetector.findCycles().size()]);
+    }
     
     private void positionVertexAt(Object vertex, int x, int y)
     {
