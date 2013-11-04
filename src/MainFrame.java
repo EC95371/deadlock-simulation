@@ -30,7 +30,7 @@ public class MainFrame extends javax.swing.JFrame
         initComponents();
         this.setTitle("Deadlock Detection Simulation");
         try {
-            InputStream imgStream = this.getClass().getResourceAsStream("icon.PNG"); //replace this with a better image! (Chris?) 
+            InputStream imgStream = this.getClass().getResourceAsStream("lipbite.PNG"); //replace this with a better image! (Chris?) 
             BufferedImage bi = ImageIO.read(imgStream); 
             ImageIcon myImg = new ImageIcon(bi); 
             this.setIconImage(myImg.getImage());
