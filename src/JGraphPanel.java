@@ -15,7 +15,7 @@ import org.jgrapht.graph.DefaultEdge;
 
 /**
  * TODO:
- * 1. anchor jgraph to the sides of JGraphPanel so that resizing panel will resize jgraph.
+ * 1. anchor jgraph to the sides of JGraphPanel so that resizing panel will resize jgraph. (ANISH)
  * 2. set up getters/setters 
  * @author Gabriel Shaw
  */
@@ -24,7 +24,7 @@ import org.jgrapht.graph.DefaultEdge;
 public class JGraphPanel extends JPanel {
     
     //variables 
-    private final JGraphModelAdapter<String, DefaultEdge> jgAdapter;
+    private JGraphModelAdapter<String, DefaultEdge> jgAdapter;
     private JGraph jgraph;
     private ListenableDirectedGraph<String, DefaultEdge> graph;
     
@@ -34,8 +34,8 @@ public class JGraphPanel extends JPanel {
         // create a visualization using JGraph, via an adapter
         jgAdapter = new JGraphModelAdapter<String, DefaultEdge>(graph);
         jgraph = new JGraph(jgAdapter);
-        
 
+        
         this.add(jgraph);
 
 //        String v1 = "v1";
@@ -73,7 +73,15 @@ public class JGraphPanel extends JPanel {
         CycleDetector cycleDetector = new CycleDetector(graph);
         return cycleDetector.detectCycles();
     }
-    
+    public void highlightCycleNodes()
+    {//TODO Fill this out!! (ANYONE)
+        
+    }
+    public String[] getCycleNodes()
+    {
+        CycleDetector cycleDetector = new CycleDetector(graph);
+        return (String[])cycleDetector.findCycles().toArray(new String[cycleDetector.findCycles().size()]);
+    }
     
     private void positionVertexAt(Object vertex, int x, int y)
     {
@@ -90,7 +98,7 @@ public class JGraphPanel extends JPanel {
 
         GraphConstants.setBounds(attr, newBounds);
 
-        // TODO: Clean up generics once JGraph goes generic
+        // TODO: Clean up generics once JGraph goes generic 
         AttributeMap cellAttr = new AttributeMap();
         cellAttr.put(cell, attr);
         jgAdapter.edit(cellAttr, null, null, null);

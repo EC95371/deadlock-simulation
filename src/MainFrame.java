@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -64,8 +65,11 @@ public class MainFrame extends javax.swing.JFrame
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         outputLable = new javax.swing.JLabel();
+        cycleOutputLable = new javax.swing.JLabel();
+        resetButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        aboutMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -105,11 +109,20 @@ public class MainFrame extends javax.swing.JFrame
 
         outputLable.setText(" ");
 
+        cycleOutputLable.setText("                                                                            ");
+
+        resetButton.setText("Reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(buttonPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonPanelLayout.createSequentialGroup()
@@ -129,11 +142,16 @@ public class MainFrame extends javax.swing.JFrame
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cycleOutputLable)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(detectDeadlockButton)
-                    .addComponent(outputLable))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addComponent(resetButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(outputLable)))
                 .addContainerGap())
         );
         buttonPanelLayout.setVerticalGroup(
@@ -154,11 +172,22 @@ public class MainFrame extends javax.swing.JFrame
                         .addComponent(jLabel2)
                         .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)
-                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cycleOutputLable)
+                        .addComponent(resetButton)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
+
+        aboutMenuItem.setText("About");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu1.add(aboutMenuItem);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -171,13 +200,13 @@ public class MainFrame extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jGraphPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+            .addComponent(jGraphPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(22, 22, 22)
                 .addComponent(jGraphPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -199,10 +228,32 @@ public class MainFrame extends javax.swing.JFrame
         if(jGraphPanel.detectCycles())
         {
             outputLable.setText("Cycle Detected!");
+            jGraphPanel.highlightCycleNodes();
+            String[] cycleNodesArray = jGraphPanel.getCycleNodes();
+            String cycleNodes = "";
+            //output cycleNodes to cyleOutputLable
+            for(int i=0; i<cycleNodesArray.length-1; i++)
+            {
+                cycleNodes += cycleNodesArray[i] + ", "; //TODO add actual formating 
+            }
+            cycleNodes += "and " + cycleNodesArray[cycleNodesArray.length -1] +".";
+            JOptionPane.showMessageDialog(null, "A cycle has been found between the following nodes!\n" +cycleNodes , "alert", JOptionPane.ERROR_MESSAGE);
+            cycleOutputLable.setText(cycleNodes);
         }else{
             outputLable.setText("No Cycle Detected!");
         }
     }//GEN-LAST:event_detectDeadlockButtonActionPerformed
+
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        //opens the about page.
+        AboutFrame window = new AboutFrame();
+        window.setVisible(true);
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+    //TODO Add functionality to reset graph. (ANYONE)    
+    //jGraphPanel.reset(); 
+    }//GEN-LAST:event_resetButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,9 +291,11 @@ public class MainFrame extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton addEdgeButton;
     private javax.swing.JButton addVertexButton;
     private javax.swing.JPanel buttonPanel;
+    private javax.swing.JLabel cycleOutputLable;
     private javax.swing.JButton detectDeadlockButton;
     private JGraphPanel jGraphPanel;
     private javax.swing.JLabel jLabel1;
@@ -252,6 +305,7 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel outputLable;
+    private javax.swing.JButton resetButton;
     private javax.swing.JComboBox selectEdgeOne;
     private javax.swing.JComboBox selectEdgeTwo;
     private javax.swing.JTextField vertexName;
