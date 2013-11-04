@@ -108,11 +108,8 @@
                       <Component id="vertexName" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="outputLable" min="-2" max="-2" attributes="0"/>
-                      <Component id="cycleOutputLable" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="152" max="32767" attributes="0"/>
+                  <Component id="outputLable" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="329" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="detectDeadlockButton" min="-2" max="-2" attributes="0"/>
                       <Component id="resetButton" min="-2" max="-2" attributes="0"/>
@@ -144,7 +141,6 @@
                               <Component id="selectEdgeOne" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="selectEdgeTwo" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="cycleOutputLable" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="resetButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -226,11 +222,6 @@
         <Component class="javax.swing.JLabel" name="outputLable">
           <Properties>
             <Property name="text" type="java.lang.String" value="                 "/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="cycleOutputLable">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="                                                                            "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="resetButton">

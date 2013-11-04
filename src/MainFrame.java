@@ -113,7 +113,6 @@ public class MainFrame extends javax.swing.JFrame
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         outputLable = new javax.swing.JLabel();
-        cycleOutputLable = new javax.swing.JLabel();
         resetButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -158,8 +157,6 @@ public class MainFrame extends javax.swing.JFrame
 
         outputLable.setText("                 ");
 
-        cycleOutputLable.setText("                                                                            ");
-
         resetButton.setText("Reset");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,10 +190,8 @@ public class MainFrame extends javax.swing.JFrame
                         .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(vertexName, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(outputLable)
-                    .addComponent(cycleOutputLable))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addComponent(outputLable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(detectDeadlockButton)
                     .addComponent(resetButton))
@@ -223,7 +218,6 @@ public class MainFrame extends javax.swing.JFrame
                             .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
                             .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cycleOutputLable)
                             .addComponent(resetButton))))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
@@ -296,7 +290,6 @@ public class MainFrame extends javax.swing.JFrame
             }
             cycleNodes += "and " + cycleNodesArray[cycleNodesArray.length -1] +".";
             JOptionPane.showMessageDialog(null, "A cycle has been found between the following nodes!\n" +cycleNodes , "alert", JOptionPane.ERROR_MESSAGE);
-            cycleOutputLable.setText(cycleNodes);
         }else{
             outputLable.setText("No Cycle Detected!");
         }
@@ -364,7 +357,6 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JButton addEdgeButton;
     private javax.swing.JButton addVertexButton;
     private javax.swing.JPanel buttonPanel;
-    private javax.swing.JLabel cycleOutputLable;
     private javax.swing.JButton detectDeadlockButton;
     private JGraphPanel jGraphPanel;
     private javax.swing.JLabel jLabel1;
