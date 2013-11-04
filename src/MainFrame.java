@@ -68,10 +68,14 @@ public class MainFrame extends javax.swing.JFrame
                 {
                     int heldResourceCount = input.nextInt();
                     jGraphPanel.addVertex("Process " +i);
+                    selectEdgeOne.addItem("Process " +i);
+                    selectEdgeTwo.addItem("Process " +i);
                     for(int j=0; j<heldResourceCount; j++)//owned resources
                     {
                         int resource = input.nextInt();
                         jGraphPanel.addVertex("Resource " +resource);
+                        selectEdgeOne.addItem("Resource " +resource);
+                        selectEdgeTwo.addItem("Resource " +resource);
                         jGraphPanel.addEdge("Resource " +resource, "Process " +i);
                     }
                     int requestedResourceCount = input.nextInt();
@@ -303,6 +307,9 @@ public class MainFrame extends javax.swing.JFrame
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         jGraphPanel.resetJGraphPanel();
+        //clear out both jComboBoxes
+        selectEdgeOne.removeAllItems();
+        selectEdgeTwo.removeAllItems();
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void openFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileChooserActionPerformed
