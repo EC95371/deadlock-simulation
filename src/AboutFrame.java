@@ -21,7 +21,7 @@ public class AboutFrame extends javax.swing.JFrame
 {
 
     /**
-     * Creates new form AboutFrame
+     * Change the about page to have some information (DAVID /ALEX)
      */
     public AboutFrame() 
     {
