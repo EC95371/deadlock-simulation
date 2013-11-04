@@ -229,16 +229,16 @@ public class MainFrame extends javax.swing.JFrame
         {
             outputLable.setText("Cycle Detected!");
             jGraphPanel.highlightCycleNodes();
-            String[] cycleNodes = jGraphPanel.getCycleNodes();
-            String tempString = "";
+            String[] cycleNodesArray = jGraphPanel.getCycleNodes();
+            String cycleNodes = "";
             //output cycleNodes to cyleOutputLable
-            for(int i=0; i<cycleNodes.length-1; i++)
+            for(int i=0; i<cycleNodesArray.length-1; i++)
             {
-                tempString += cycleNodes[i] + ", "; //TODO add actual formating 
+                cycleNodes += cycleNodesArray[i] + ", "; //TODO add actual formating 
             }
-            tempString += "and " + cycleNodes[cycleNodes.length -1] +".";
-            JOptionPane.showMessageDialog(null, "A cycle has been found between the following nodes!\n" +tempString , "alert", JOptionPane.ERROR_MESSAGE);
-            cycleOutputLable.setText(tempString);
+            cycleNodes += "and " + cycleNodesArray[cycleNodesArray.length -1] +".";
+            JOptionPane.showMessageDialog(null, "A cycle has been found between the following nodes!\n" +cycleNodes , "alert", JOptionPane.ERROR_MESSAGE);
+            cycleOutputLable.setText(cycleNodes);
         }else{
             outputLable.setText("No Cycle Detected!");
         }
