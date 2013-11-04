@@ -86,6 +86,7 @@ public class JGraphPanel extends JPanel {
     private void positionVertexAt(Object vertex, int x, int y)
     {
         DefaultGraphCell cell = jgAdapter.getVertexCell(vertex);
+        
         AttributeMap attr = cell.getAttributes();
         Rectangle2D bounds = GraphConstants.getBounds(attr);
 
@@ -104,6 +105,7 @@ public class JGraphPanel extends JPanel {
         jgAdapter.edit(cellAttr, null, null, null);
     }
     public void resetJGraphPanel(){
+        //remove all components and update UI
         this.removeAll();
         this.updateUI();
         // create a JGraphT graph

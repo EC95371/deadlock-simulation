@@ -265,8 +265,7 @@ public class MainFrame extends javax.swing.JFrame
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
-    //TODO Add functionality to reset graph. (ANYONE)    
-    jGraphPanel.resetJGraphPanel();
+        jGraphPanel.resetJGraphPanel();
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void openFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFileChooserActionPerformed
