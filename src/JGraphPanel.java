@@ -103,6 +103,18 @@ public class JGraphPanel extends JPanel {
         cellAttr.put(cell, attr);
         jgAdapter.edit(cellAttr, null, null, null);
     }
+    public void resetJGraphPanel(){
+        this.removeAll();
+        this.updateUI();
+        // create a JGraphT graph
+        graph = new ListenableDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+        // create a visualization using JGraph, via an adapter
+        jgAdapter = new JGraphModelAdapter<String, DefaultEdge>(graph);
+        jgraph = new JGraph(jgAdapter);
+
+        
+        this.add(jgraph);
+    }
     
 //    public static void main(String [] args) {
 //        //Schedule a job for the event-dispatching thread:
