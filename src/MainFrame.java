@@ -1,6 +1,7 @@
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.util.Scanner;
 
 
 
@@ -31,7 +33,7 @@ public class MainFrame extends javax.swing.JFrame
         initComponents();
         this.setTitle("Deadlock Detection Simulation");
         try {
-            InputStream imgStream = this.getClass().getResourceAsStream("lipbite.PNG"); //replace this with a better image! (Chris?) 
+            InputStream imgStream = this.getClass().getResourceAsStream("icon.PNG"); //replace this with a better image! (Chris?) 
             BufferedImage bi = ImageIO.read(imgStream); 
             ImageIcon myImg = new ImageIcon(bi); 
             this.setIconImage(myImg.getImage());
@@ -46,7 +48,48 @@ public class MainFrame extends javax.swing.JFrame
     
     public void importFile()
     {
-       //(chris) add input stuff here!!!  
+        if(importedFile.isFile())
+            System.out.println("we have a file");
+      
+        String filename = importedFile.getName();
+
+        
+      Scanner input;
+        try {
+            input = new Scanner(importedFile);
+            while(input.hasNext()) 
+            {
+               
+                
+                int numProcess = input.nextInt();
+                int numResource = input.nextInt();
+                input.nextLine(); //push to next line
+                for(int i=0; i<numProcess; i++)
+                {
+                    int heldResourceCount = input.nextInt();
+                    jGraphPanel.addVertex("Process " +i);
+                    for(int j=0; j<heldResourceCount; j++)//owned resources
+                    {
+                        int resource = input.nextInt();
+                        jGraphPanel.addVertex("Resource " +resource);
+                        jGraphPanel.addEdge("Resource " +resource, "Process " +i);
+                    }
+                    int requestedResourceCount = input.nextInt();
+                    for(int j=0; j<requestedResourceCount; j++)//wanted resources
+                    {
+                        int resource = input.nextInt();
+                        jGraphPanel.addVertex("Resource " +resource);
+                        jGraphPanel.addEdge("Process " +i, "Resource " +resource);
+                    }
+                }
+                
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+      
+     
     }
 
     /**
@@ -70,7 +113,6 @@ public class MainFrame extends javax.swing.JFrame
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         outputLable = new javax.swing.JLabel();
-        cycleOutputLable = new javax.swing.JLabel();
         resetButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -113,9 +155,7 @@ public class MainFrame extends javax.swing.JFrame
 
         jLabel3.setText("to");
 
-        outputLable.setText(" ");
-
-        cycleOutputLable.setText("                                                                            ");
+        outputLable.setText("                 ");
 
         resetButton.setText("Reset");
         resetButton.addActionListener(new java.awt.event.ActionListener() {
@@ -142,28 +182,25 @@ public class MainFrame extends javax.swing.JFrame
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(vertexName, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(buttonPanelLayout.createSequentialGroup()
                         .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cycleOutputLable)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(vertexName, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(outputLable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
                 .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(detectDeadlockButton)
-                    .addGroup(buttonPanelLayout.createSequentialGroup()
-                        .addComponent(resetButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(outputLable)))
-                .addContainerGap())
+                    .addComponent(resetButton))
+                .addGap(15, 15, 15))
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(buttonPanelLayout.createSequentialGroup()
                         .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addVertexButton)
@@ -171,17 +208,18 @@ public class MainFrame extends javax.swing.JFrame
                             .addComponent(vertexName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(detectDeadlockButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addEdgeButton)
-                            .addComponent(outputLable)))
-                    .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)
-                        .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cycleOutputLable)
-                        .addComponent(resetButton)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(addEdgeButton))
+                    .addGroup(buttonPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(outputLable)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(selectEdgeOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(selectEdgeTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(resetButton))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jMenu1.setText("File");
@@ -252,7 +290,6 @@ public class MainFrame extends javax.swing.JFrame
             }
             cycleNodes += "and " + cycleNodesArray[cycleNodesArray.length -1] +".";
             JOptionPane.showMessageDialog(null, "A cycle has been found between the following nodes!\n" +cycleNodes , "alert", JOptionPane.ERROR_MESSAGE);
-            cycleOutputLable.setText(cycleNodes);
         }else{
             outputLable.setText("No Cycle Detected!");
         }
@@ -319,7 +356,6 @@ public class MainFrame extends javax.swing.JFrame
     private javax.swing.JButton addEdgeButton;
     private javax.swing.JButton addVertexButton;
     private javax.swing.JPanel buttonPanel;
-    private javax.swing.JLabel cycleOutputLable;
     private javax.swing.JButton detectDeadlockButton;
     private JGraphPanel jGraphPanel;
     private javax.swing.JLabel jLabel1;
