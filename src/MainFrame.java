@@ -1,6 +1,7 @@
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.util.Scanner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,7 +37,7 @@ public class MainFrame extends javax.swing.JFrame
         initComponents();
         this.setTitle("Deadlock Detection Simulation");
         try {
-            InputStream imgStream = this.getClass().getResourceAsStream("lipbite.PNG"); //replace this with a better image! (Chris?) 
+            InputStream imgStream = this.getClass().getResourceAsStream("icon.PNG"); //replace this with a better image! (Chris?) 
             BufferedImage bi = ImageIO.read(imgStream); 
             ImageIcon myImg = new ImageIcon(bi); 
             this.setIconImage(myImg.getImage());
@@ -50,7 +52,48 @@ public class MainFrame extends javax.swing.JFrame
     
     public void importFile()
     {
-       //(chris) add input stuff here!!!  
+        if(importedFile.isFile())
+            System.out.println("we have a file");
+      
+        String filename = importedFile.getName();
+
+        
+      Scanner input;
+        try {
+            input = new Scanner(importedFile);
+            while(input.hasNext()) 
+            {
+               
+                
+                int numProcess = input.nextInt();
+                int numResource = input.nextInt();
+                input.nextLine(); //push to next line
+                for(int i=0; i<numProcess; i++)
+                {
+                    int heldResourceCount = input.nextInt();
+                    jGraphPanel.addVertex("Process " +i);
+                    for(int j=0; j<heldResourceCount; j++)//owned resources
+                    {
+                        int resource = input.nextInt();
+                        jGraphPanel.addVertex("Resource " +resource);
+                        jGraphPanel.addEdge("Resource " +resource, "Process " +i);
+                    }
+                    int requestedResourceCount = input.nextInt();
+                    for(int j=0; j<requestedResourceCount; j++)//wanted resources
+                    {
+                        int resource = input.nextInt();
+                        jGraphPanel.addVertex("Resource " +resource);
+                        jGraphPanel.addEdge("Process " +i, "Resource " +resource);
+                    }
+                }
+                
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+      
+     
     }
 
     /**
