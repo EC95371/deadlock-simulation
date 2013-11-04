@@ -27,14 +27,14 @@ public class AboutFrame extends javax.swing.JFrame
     {
         initComponents();
         this.setTitle("About group Deadlock Detection Simulation");
-//        try {
-//            InputStream imgStream = this.getClass().getResourceAsStream("icon.PNG"); //replace this with a better image! (Chris?) 
-//            BufferedImage bi = ImageIO.read(imgStream); 
-//            ImageIcon myImg = new ImageIcon(bi); 
-//            this.setIconImage(myImg.getImage());
-//        } catch (IOException ex) {
-//            Logger.getLogger(AboutFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            InputStream imgStream = this.getClass().getResourceAsStream("icon.PNG"); //replace this with a better image! (Chris?) 
+            BufferedImage bi = ImageIO.read(imgStream); 
+            ImageIcon myImg = new ImageIcon(bi); 
+            this.setIconImage(myImg.getImage());
+        } catch (IOException ex) {
+            Logger.getLogger(AboutFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
